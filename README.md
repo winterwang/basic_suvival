@@ -1,1 +1,1 @@
-# basic_suvival
+Slides for internal presentation in the Department of Public Health, Aichi Medical University.

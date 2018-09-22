@@ -1,0 +1,70 @@
+---
+title: "Survival Analysis"
+subtitle: "The basic ideas"
+author: "Chaochen Wang"
+date: "2018/10/03 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [default, "css/LSHTM.css", metropolis-fonts]
+    lib_dir: libs
+    nature:
+      countdown: 60000
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# Describing survival data (1)
+
+<!-- ### Important assumptions:  -->
+
+<!-- + It is assumed that censoring is uninformative about event times. -->
+
+<!-- + This means that the time at which an individual is censored, or the fact that they are censored, does not give us any information about when that person may have the event. -->
+
++ We define a random variable $T$, which represents survival time.
+
++ The survival function 
+
+    + The survivor function at a time $t$ is the probability that the survival time $T$ exceeds a value $t$:
+
+$$S(t) = \text{Pr}(T>t)$$
+  + Relation to the cumulative distribution function: 
+    
+$$
+\begin{aligned}
+F(t) & =  \text{Pr}(T\leqslant t) \\
+     & = 1 - \text{Pr}(T>t) \\ 
+     & = 1- S(t)
+\end{aligned}
+$$
+
++ the hazard function
+
+$$
+h(t) = \text{lim}_{\delta\rightarrow0}\frac{1}{\delta}\text{Pr}(t\leqslant T < t + \delta | T \geqslant t)
+$$
+
+
+---
+class: middle
+
+# Describing survival data (2)
+
+- the cumulative hazard function
+
+$$
+H(t) = \int_o^th(u)du
+$$
+
+
+- the probability density function at time $t$:
+
+$$
+f(t) = \frac{d}{dt}F(t) = \text{lim}_{\delta\rightarrow0}\frac{1}{\delta}\text{Pr}(t\leqslant T < t + \delta)
+$$
+
