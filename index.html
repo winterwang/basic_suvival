@@ -13,9 +13,9 @@
 class: center, middle, inverse, title-slide
 
 # Survival Analysis
-## The basic ideas
+## The basic ideas, models, assumptions, and something beyond
 ### Chaochen Wang
-### 2018/10/03 (updated: 2018-09-25)
+### 2018/10/03 (updated: 2018-09-26)
 
 ---
 
@@ -47,7 +47,7 @@ F(t) &amp; =  \text{Pr}(T\leqslant t) \\
 \end{aligned}`
 $$
 
-+ the hazard function
++ The hazard function
 
 $$
 h(t) = \text{lim}_{\delta\rightarrow0}\frac{1}{\delta}\text{Pr}(t\leqslant T &lt; t + \delta | T \geqslant t)
@@ -59,20 +59,20 @@ class: middle
 
 # Describing survival data (2)
 
-- the cumulative hazard function
+- The cumulative hazard function
 
 $$
 H(t) = \int_o^th(u)du
 $$
 
 
-- the probability density function at time `\(t\)`:
+- The probability density function at time `\(t\)`:
 
 $$
 f(t) = \frac{d}{dt}F(t) = \text{lim}_{\delta\rightarrow0}\frac{1}{\delta}\text{Pr}(t\leqslant T &lt; t + \delta)
 $$
 - In general, and in particular to incorporate continuous variables and adjustment for confounders, we want to use
-**regression-based approaches** to analysing survival data. 
+**regression-based approaches** to analyze survival data. 
 
 - Methods of analysis need to **handle censoring** and need to allow for the fact that **survival times are strictly non-negative**.
 
@@ -107,7 +107,7 @@ $$
 `\begin{aligned}
 H(t) &amp;  = \int_0^th(u)du = \int_0^t\frac{f(u)}{S(u)}du = \int_0^t\frac{f(u)}{1-F(u)}du  \\
      &amp; = - \int_0^t\frac{-f(u)}{1-F(u)}du = - \log[1-F(t)] = -\log[S(t)] \\ 
-\Rightarrow S(t) &amp; = \exp(-H(t))
+\Rightarrow S(t) &amp; = \exp[-H(t)]
 \end{aligned}`
 $$
 
@@ -121,40 +121,127 @@ class: middle
 - Weibull distribution
 - Log-logistic distribution
 
-### 2. Non-parametric methods
-
+### 2. Non-parametric methods 
 - Kaplan-Meier estimate of the survivor function
 - Life table estimates
 - Log rank test
 - Nelson-Aalen estimate of the cumulative hazard
 
 ### 3. Semi-parametric methods
-
 - Cox proportional hazards model
 
 ---
 class: middle
+# Parametric models (1)
 
-### Exponential distribution
-
-Under the exponential distribution the hazard rate is constant over time: `\(\lambda\)`
+**Exponential distribution:** Under the exponential distribution the hazard rate is constant over time: `\(\lambda\)`
 
 $$
 `\begin{aligned}
 h(t) &amp; = \lambda \\
 S(t) &amp; = \exp(-\lambda t) \\
-f(t) &amp; = \lambda\exp(-\lambda t)
+f(t) &amp; = \lambda\exp(-\lambda t) \\
 \end{aligned}`
 $$
+*Proportional hazard model:*
+`$$h(t|x) = h_0(t)\exp(\beta x) = \lambda \exp(\beta x)$$`
 
-
-### Weibull Distribution 
+**Weibull Distribution:**
 
 $$
 `\begin{aligned}
-h(t) 
+h(t) &amp; = \lambda\kappa t^{\kappa - 1} \\ 
+S(t) &amp; = \exp(-\lambda t^\kappa) \\ 
+f(t) &amp; = \lambda\kappa t^{\kappa - 1}\exp(-\lambda t^\kappa)
 \end{aligned}`
 $$
+
+*Proportional hazard model:*
+
+`$$h(t|x) = h_0(t)\exp(\beta x) = \lambda\kappa t^{\kappa - 1} \exp(\beta x)$$`
+
+---
+class: middle
+# Parametric models (2)
+
+
+- The assumption that `\(\beta\)` does not depend on `\(t\)` is called the **proportional hazards assumption** -- the effect on the hazard does not change over time.
+
+- The ratio of the hazards in the two groups is called: **Hazard ratio**
+$$
+\frac{h(t|x)}{h_0(t)} = \exp(\beta)
+$$
+
+- `\(\beta\)` is called log hazard ratio
+
+- The hazard ratio `\(\exp(\beta)\)` does not depend on time (the **proportional hazards assumption**) -- it is **constant** over time .
+
+
+---
+class: middle
+# Semi-parametric model (1)
+
+Form of a proportional hazard model:
+
+$$
+h(t|x) = h_0(t)\exp(\beta x)
+$$
+
+In fully parametric survival models (exponential distribution model, Weibull distribution model, etc.), a form is assumed for `\(h_0(t)\)` (baseline hazard).
+
+We have to specify a form for the baseline hazard in fully parametric survival models, which we may make mistakes.
+
+But, 
+
+--
+
+- If the hazard ratio `\(\exp(\beta)\)` is the only parameter of interest. 
+
+--
+- **Do we really care about the baseline hazard** `\(h_0(t)\)` ?
+
+
+---
+class: inverse
+background-image: url("./img/Idontcare.jpg")
+background-position: 50% 50%
+background-size: contain
+
+
+---
+class: middle
+# Semi-parametric model (2)
+
+- Cox (1972) &lt;sup&gt;1&lt;/sup&gt; suggested that the baseline hazard could be left un-specified.
+
+- The model for the hazard of the form is called **Cox proportional hazards model** if no form is given for the baseline hazard. 
+
+$$
+h(t|x) = h_0(t)\exp(\beta x) 
+$$
+
+- This is a **semi-parametric model** because the effect (hazard ratio) of explanatory variable `\(x\)` on the hazard is parameterized, but `\(h_0(t)\)` (baseline hazard) is not parameterized. 
+
+
+.footnote[
+[1] Cox, David R. 1972. “Models and Life-Tables Regression.” JR Stat. Soc. Ser. B 34: 187–220.]
+
+
+---
+class: inverse, middle, center
+# What are we assuming?
+
+---
+class: middle
+# Assumptions
+
+1. **The proportional hazards assumption** that the explanatory variables act on survival in such a way that the hazard ratio is constant over time: `\(h(t|x) = h_0(t)\exp(\beta x)\)` is correct.
+
+2. The assumption that we have **correctly specified the form** for how the explanatory variables act on the hazard: `\(h(t|x) = h_0(t)\exp(\beta x) \text{ versus } h(t|x) = h_0(t)\exp(\beta_1 x + \beta_2 x^2)\)`.
+
+3. Censoring is **uninformative** for the event of interest.
+
+4. Individuals are **independent**.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
