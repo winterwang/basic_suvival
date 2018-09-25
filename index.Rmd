@@ -67,4 +67,87 @@ $$
 $$
 f(t) = \frac{d}{dt}F(t) = \text{lim}_{\delta\rightarrow0}\frac{1}{\delta}\text{Pr}(t\leqslant T < t + \delta)
 $$
+- In general, and in particular to incorporate continuous variables and adjustment for confounders, we want to use
+**regression-based approaches** to analysing survival data. 
 
+- Methods of analysis need to **handle censoring** and need to allow for the fact that **survival times are strictly non-negative**.
+
+
+---
+class: middle
+
+### Relationships between functions (1)
+
+<!-- ## $S(t), h(t), H(t), f(t)$ -->
+
+$$
+\begin{aligned}
+f(t) & = \frac{\text{d}}{\text{d}t}F(t)  = \frac{\text{d}}{\text{d}t}\{ 1-S(t) \} = - \frac{\text{d}}{\text{d}t}S(t) \\
+S(t) & = 1 - F(t)  = 1 - \int_0^t f(u)\text{d}u = \int_t^\infty f(u)\text{d}u \\
+h(t) & = \lim_{\delta\rightarrow0}\frac{1}{\delta}\text{Pr}(t \leqslant T < t+ \delta | T > t) \\
+     & = \lim_{\delta\rightarrow0}\frac{1}{\delta}\frac{\text{Pr}(t \leqslant T < t+ \delta, T > t)}{\text{Pr}(T > t)} (\text{Bayes' Theroem}) \\
+     & = \lim_{\delta\rightarrow0}\frac{1}{\delta}\frac{\text{Pr}(t \leqslant T < t+ \delta)}{\text{Pr}(T > t)} = \frac{f(t)}{S(t)}\\
+h(t) & = \frac{f(t)}{S(t)} = \frac{\frac{\text{d}}{\text{d}t}F(t)}{S(t)}  \\
+     & = \frac{- \frac{\text{d}}{\text{d}t}S(t)}{S(t)} = -\frac{d\log[S(t)]}{dS(t)}\cdot\frac{dS(t)}{dt}  \\ 
+     & = - \frac{\text{d}}{\text{d}t}\text{log}[S(t)] (\text{chain rule}) \\
+\end{aligned}
+$$
+
+
+---
+class: middle
+
+### Relationships between functions (2)
+
+$$
+\begin{aligned}
+H(t) &  = \int_0^th(u)du = \int_0^t\frac{f(u)}{S(u)}du = \int_0^t\frac{f(u)}{1-F(u)}du  \\
+     & = - \int_0^t\frac{-f(u)}{1-F(u)}du = - \log[1-F(t)] = -\log[S(t)] \\ 
+\Rightarrow S(t) & = \exp(-H(t))
+\end{aligned}
+$$
+
+
+---
+class: middle
+# Analysing survival data
+
+### 1. Fully parametric methods
+- Exponential distribution
+- Weibull distribution
+- Log-logistic distribution
+
+### 2. Non-parametric methods
+
+- Kaplan-Meier estimate of the survivor function
+- Life table estimates
+- Log rank test
+- Nelson-Aalen estimate of the cumulative hazard
+
+### 3. Semi-parametric methods
+
+- Cox proportional hazards model
+
+---
+class: middle
+
+### Exponential distribution
+
+Under the exponential distribution the hazard rate is constant over time: $\lambda$
+
+$$
+\begin{aligned}
+h(t) & = \lambda \\
+S(t) & = \exp(-\lambda t) \\
+f(t) & = \lambda\exp(-\lambda t)
+\end{aligned}
+$$
+
+
+### Weibull Distribution 
+
+$$
+\begin{aligned}
+h(t) 
+\end{aligned}
+$$
