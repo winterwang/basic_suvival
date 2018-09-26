@@ -242,6 +242,52 @@ class: middle
 3. Censoring is **uninformative** for the event of interest.
 
 4. Individuals are **independent**.
+
+5. We have included **all relevant** explanatory variables **including possible interactions**.
+
+
+---
+class: middle
+### Assessing the proportional hazards assumption (plot)
+
+- The survivor function: 
+
+$$
+S(t|x) = \exp[-H_0(t)e^{\beta x}]
+$$
+
+- Take logs and moving the minus sign: 
+$$
+-\log S(t|x) = -H_0(t)e^{\beta x}
+$$
+
+- Take logs again: 
+$$
+\log[-\log S(t|x)] = \log H_0(t) + \beta x
+$$
+
+
+- If `\(x\)` is a binary (0 or 1) variable, then if we plot `\(\log[-\log S(t|0)]\)` and `\(\log[-\log S(t|1)]\)` against **time (or other function of time, such as log time)**, the curves for different groups should be approximately **parallel over time** if the proportional hazards assumption is met. 
+
+
+---
+class: middle
+### Assessing the proportional hazards assumption (plot)
+
+- In Stata, this can be easily done by the following command after `stset` survival data:
+
+```
+stphplot, by(treat)
+```
+
+- In R, a little bit working
+
+
+```r
+survfit_object &lt;- survfit(Surv(time, event) ~ treat, data)
+plot(survfit_object, fun = "cloglog", xlab = "time(logcale)", 
+   ylab = "log(-logS(t))")
+```
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
