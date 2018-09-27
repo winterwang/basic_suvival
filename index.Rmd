@@ -175,6 +175,37 @@ $$
 
 ---
 class: middle
+### Fitting Parametric models in STATA and R
+
+- STATA: after `stset` declared
+
+```
+streg exp_var, d(exp)
+streg exp_var, d(weib)
+
+// comparing exponential and weibull distribution
+qui streg exp_var, d(weib)
+qui estimates store A
+qui streg exp_var, d(exp)
+qui estimates store B
+lrtest A B, force
+```
+
+- R: 
+
+```{r eval=FALSE}
+expo00 <- survival::survreg(Surv(time, event)) ~ exp_var, 
+                                   dist = "exponential", data)
+expo01 <- survival::survreg(Surv(time, event)) ~ exp_var, 
+                                   dist = "weibull", data)
+
+anova(expo00, expo01) # likelihood ratio test
+```
+
+
+
+---
+class: middle
 # Semi-parametric model (1)
 
 Form of a proportional hazard model:
@@ -283,3 +314,27 @@ survfit_object <- survfit(Surv(time, event) ~ treat, data)
 plot(survfit_object, fun = "cloglog", xlab = "time(logcale)", 
    ylab = "log(-logS(t))")
 ```
+
+```{r echo=FALSE, out.width='70%', fig.align='center'}
+knitr::include_graphics('img/prop00.png')
+```
+
+---
+class: inverse, center, middle
+# Strategies of doing survival analysis
+
+
+
+---
+class: middle
+# To be semi-parametric or fully-parametric?
+
+- The Cox model uses fewer assumptions, but a fully parametric model may **often be perfectly appropriate**.
+
+- If an exponential or Weibull model is fine, then a Cox model is also OK.
+
+- They will generate similar hazard ratio estimates. 
+
+- The fully-parametric approach may give slightly more precise (smaller 95% CIs).
+
+- But this is traded of against the concern that the baseline hazard may have been mis-specified.
