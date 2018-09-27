@@ -384,11 +384,11 @@ class: middle
   
   - Type 2: **Understanding the associations between a set of several variables and the time-to-event** &lt;br&gt; We are interested in the independent effects of several exposures on survival, perhaps to determine which has the greatest impact on survival.
   
-  - Type 3: **Prediction modelling** &lt;br&gt; We wish to ous a potentially large number of explanatory variables to build a model from which we can predict survival in a new individual with given values for the explanatory variables. 
+  - Type 3: **Prediction modelling** &lt;br&gt; We wish to use a potentially large number of explanatory variables to build a model from which we can predict survival in a new individual with given values for the explanatory variables. 
 
 
 ---
-class: middle
+class: middle, center, inverse
 ## Estimating an exposure effect
 
 
@@ -426,8 +426,223 @@ class: middle
 7. For the final model, include all variables used in 5. plus any additional variables identified in 6.
 
 ---
+class: middle, center
+## **Further check:** 
+
+## Again, check whether the proportional hazard assumptions holds in the final model.
+
+
+---
+class: middle 
+### Understanding the associations between a set of several variables and the time-to-event
+
+- Here we may not have much prior hypotheses about which explanatory variable(s) may be associated with survival.
+
+- If there are not too many variables then we might decide to include them all in a model and discuss the associations between each variable and the outcome after adjustment for all other variables.
+
+- Alternatively, one might follow a procedure which is an extended version of that for investigation type 1.
+
+---
+class: middle 
+### Proposed strategy 
+
+#### Preliminary investigations
+- Kaplan-Meier plots
+
+- Log rank tests to investigate the association between each variable and the outcome.
+
+#### Main analysis
+- As outlined in Collet (2015)&lt;sup&gt;1&lt;/sup&gt; and as described in the following slides.
+
+&lt;img src="img/ModellSurv.jpg" width="18%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+.footnote[
+[1] Collett, D. Modelling survival data in medical research.&lt;br&gt;
+Chapman and Hall/CRC, 2015]
+
+---
+class: middle
+### Proposed strategy - main analysis: 
+
+1. Consider each variable separately in a series of Cox proportional hazards (or parametric) models and assess whether each is associated with survival by itsefl using a likelihood ratio test (LRT, next slide). 
+
+2. Include all of the variables selected at stage 1. in a single Cox proportional hazards model. 
+
+3. Exclude each variable one by one and use LRT to assess whether the exclusion significantly reduces the log likelihood. 
+
+4. Based on the results from this procedure, take those variables which remain independently associated with survival through to next stage. 
+
+5. Variables which are not important on their own could become important in the presence of (conditonal on) other variables. For each variable that did not make it through to stage 2., enter them back into the model from stage 2. **one by one** and check whether adding any of them would improve the fitting of the model. (Again, use LRT)
+
+6. Check and make sure that there is no variable left in the model which could be omitted (based on LRT), and that there are no excluded variables which should be added (based on LRT)
+
+---
+class: middle
+### **What is likelihood ratio test (LRT):** 
+
+- LRT can be used to compare nested Cox proportional hazards models (or other parametric models)
+
+- The basic principle: let's consider two variables `\(x_1, x_2\)`, where `\(x_1\)` is of interest, and `\(x_2\)` is potential confounder: 
+
+    - Fit the survival model (Cox/exponetial/Weibull) **with and without** inclusion of `\(x_2\)`; 
+    - If the inclusion of `\(x_2\)` changes the HR of `\(x_1\)` **significantly**, then we will retain it in the model;
+    - If the inclusion of `\(x_2\)` has **little impact** on the HR of `\(x_1\)` estimated, and is not of interest then we may decide to omit it from the model;
+    - If there are many potential confounders, each could be assessed in turn (one by one).
+
+---
+class: middle
+### **What is likelihood ratio test (LRT) testing:** 
+
+If Model 1 is nested within Model 2 then the likelihood ratio test statistic is: 
+
+`$$-2(\ell_{\text{Model 1}} - \ell_{\text{Model 2}}) \sim \chi^2_p$$`
+
+Where 
+
+- `\(\ell\)`: log-likelihoods under the two models
+- `\(p\)`: difference in the number of parameters in the two models
+- Possible interactions between `\(x_1, x_2\)` should be considered
+- functional forms for the variables should also be considered (i.e. should we include a `\(x_1^2\)`?)
+- LRT cannot be used to compare a parametric model (exponential/Weibull) with a Cox proportional hazards model, because they are not nested.
+
+---
+class: middle
+### Proposed strategy - main analysis: 
+
+1. Consider each variable separately in a series of Cox proportional hazards (or parametric) models and assess whether each is associated with survival by itsefl using a likelihood ratio test (LRT, next slide). 
+
+2. Include all of the variables selected at stage 1. in a single Cox proportional hazards model. 
+
+3. Exclude each variable one by one and use LRT to assess whether the exclusion significantly reduces the log likelihood. 
+
+4. Based on the results from this procedure, take those variables which remain independently associated with survival through to next stage. 
+
+5. Variables which are not important on their own could become important in the presence of (conditonal on) other variables. For each variable that did not make it through to stage 2., enter them back into the model from stage 2. **one by one** and check whether adding any of them would improve the fitting of the model. (Again, use LRT)
+
+6. Check and make sure that there is no variable left in the model which could be omitted (based on LRT), and that there are no excluded variables which should be added (based on LRT)
+
+---
+class: middle, center
+## **Further check:** 
+
+## Again, check whether the proportional hazard assumptions holds in the final model.
+
+
+---
 class: middle, inverse, center
-## Further check: &lt;br&gt;Again, check whether the proportional hazard assumptions holds in the final model.
+## Model checking
+
+
+
+---
+class: middle
+## Model checking (1)
+
+Before reporting results, we should check that the fitted model is **correctly specified**.&lt;br&gt;
+If not, infereces could be invalid and incorrect conclusions could be drawn on the research question of interest. 
+
+- Three main ways of assessing whether the proportional hazards assumption is reasonable. 
+      - Non-parametric plots as introduced. 
+      - Test of whether the effect (HR) of the explanatory variables on the hazard depends on time. 
+      - Plots of special residuals: Schoenfeld residuals.
+      
+- **Model checking is more than checking the proportional hazard assumption.**
+      - Is there any individual might be extreme or the model does not provide a good fit?
+      - Is the functional form for the explanatory variables correct? (More and more residuals coming)
+
+---
+class: middle
+### **The proportional hazard assumption (1)**
+
+- The effect (HR) of the explanatory variables on the hazard is the same over time.
+
+- Pay attention in situations such as: explanatory variable has strong effect at the start of the time scale but weaker effect later on. 
+
+- The above situation is a violation of the proportional hazards model. 
+
+
+---
+class: middle
+### **The proportional hazard assumption (2)**
+
+Test whether effect of explanatory variable on the hazard changes over time. 
+
+This can be done by including an interaction between time and the explanatory variable in the model: 
+
+$$
+h(t|x) = h_0(t)\exp(\beta x + \gamma (x\times t))
+$$
+
+If effect of `\(x\)` on the hazard changes over time then the parameter `\(\gamma\)` will be significantly different from zero.
+
+Which means to perform a test with the null hypothesis that `\(\gamma = 0\)` using: 
+
+- Likelihood ratio test
+- Wald test: `\(\frac{\hat\gamma}{SE(\hat\gamma)} \sim N(0,1)\)`
+
+For several explanatory variables then include interactions with time for each variable.
+
+---
+class: middle
+### **The proportional hazard assumption (3)**
+
+Using **Schoenfeld residuals**
+
+`$$r_{S_{1j}} = x_1i_j - \frac{\sum_{k\in R_j} x_{1k}\exp\hat\beta^Tx_k}{\sum_{k\in R_j }\exp\hat\beta^Tx_k}$$`
+
+1. The sum of Schoenfeld residuals should sum up to zero (or very close).
+
+2. Schoenfeld residuals should not show any association (dependence) with time -&gt; proportional hazards assumption is met.
+
+
+---
+class: middle
+### **The proportional hazard assumption (3)**
+
+Using **Scaled Schoenfeld residuals** is more convenient:
+
+`$$r_{SS_{1j}} = d\times r_{S_{1j}}\text{var}(\hat{\beta_1})$$`
+
+In STATA: 
+
+```
+stcox cir0
+estat phtest, plot(cir0)
+```
+
+&lt;img src="img/Schoenfeld.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+In STATA:
+
+```
+stcox cir0 
+estat phtest 
+
+Test of proportional-hazards assumption
+Time: Time
+----------------------------------------------------------------
+            |   chi2    df                             Prob&gt;chi2
+------------+---------------------------------------------------
+global test |   2.52     1                                0.1124
+----------------------------------------------------------------
+```
+
+In R: 
+
+
+```r
+time.dep.zph &lt;- survival::cox.zph(cir0.cox, transform = "identity")
+plot(time.dep.zph)
+time.dep.zph
+```
+
+```
+#         rho   chisq     p
+# cir0 -0.169    2.53  0.112
+```
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
