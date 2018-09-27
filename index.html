@@ -751,6 +751,21 @@ mgale_res &lt;- resid(model.cox1, type = "martingale")
 plot(age, mgale_res)
 lines(lowess(age, mgale_res))
 ```
+
+---
+class: middle
+### **Identifying individuals for whom the model does not provide a good fit**
+
+**Deviance residuals** are a transformation of the Martingale residuals and are defined as
+
+`$$r_{D_i} = sign(r_{M_i})[-2(r_{M_i} + \delta_i\log(\delta_i - r_{M_i}))]^{1/2}$$`
+
+- The deviance residuals transform the Martingale residuals so that they are **symmetrically distributed around the line at zero**.
+
+- A large deviance residual indicates the model does not fit well for that individual 
+
+    - **Large positive** deviance residual suggests that the individual has the event sooner than predicted by the model; 
+    - **Large negative** deviance residual suggests that the individual had the event later than predicted by the model.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
