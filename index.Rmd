@@ -646,7 +646,7 @@ time.dep.zph
 
 ---
 class: middle
-### **Assessing the correct functional form of continuous variables**
+### **Assessing the correct functional form of continuous variables (1)**
 
 Using **Martingale residuals** to help us choose the correct form of continuous variables.
 
@@ -656,6 +656,101 @@ $$
 \begin{aligned}
 h(t|x) & = h_0\exp(\beta x) \\ &\text{ vs } \\ 
 h(t|x) & = h_0\exp(\beta \log x) \\ &\text{ vs } \\ 
-h(t|x) & = h_0\exp(\beta_1 x + \beta_2 x^2) 
+h(t|x) & = h_0\exp(\beta_1 x + \beta_2 x^2) \\ &\text{ vs } \\ 
+h(t|x) & = h_0\exp(\beta_1 x + \beta_2 x^2 + \beta_3 x^3)
 \end{aligned}
 $$
+
+---
+class: middle
+### **Assessing the correct functional form of continuous variables (2)**
+
+Martingale residuals: 
+
+- a residual for an event process
+
+- Difference between what happened (observed) to a person (whether they had the event or not) and what is predicted to happen to a person under the model that has been fitted.
+
+For individual $i$, his/her Martingale residual is defined as: 
+
+$$r_{Mi} = \delta_i - \hat H_0(t_i)\exp (\hat\beta x_i)$$
+
+
+- $\delta_i$: event indicator [event = 1, censored = (0)]
+
+- $t_i$: event or censoring time; $x_i$: explanatory variable
+
+- $\hat H_0$: estimated baseline cumulative hazard at time $t_i$
+
+**If the model is correct then the Martingale residuals should sum to 0 (or close).**
+
+
+---
+class: middle
+### **Assessing the correct functional form of continuous variables (3)**
+
+- A plot of the Martingale residuals $r_{Mi}$ from a null model vs a continuous variable that we are interested in entering into the model can be used to indicate the appropriate functional form when it is entered in the model. 
+
+- If there are binary and categorical variables we know (after the variable selection procedure) that will be included in the model, then we could include these in the model and obtain the Martingale residuals, instead of using the null model.
+
+
+---
+class: middle
+### **Assessing the correct functional form of continuous variables (4)**
+
+<!-- ![](img/martingale00.png)  -->
+<!-- ![](img/martingale01.png)  -->
+
+In STATA
+
+```
+stcox treat cir0 log_bil0 cenc0, estimate 
+predict mgale_res_age, mgale
+lowess mgale_res age
+// The resulting plot is given here, and there 
+// is some suggestion that there is a non-linear effect of age
+```
+
+```{r echo=FALSE, out.width='65%', fig.align='center'}
+knitr::include_graphics('img/martingale00.png')
+```
+
+
+---
+class: middle
+### **Assessing the correct functional form of continuous variables (5)**
+
+A simple possibility is that we need to add a **quadratic term for age**. The new plot (below) looks better -- the lowess plot is approximately a flat line.
+
+```
+gen agesq = age^2
+stcox treat cir0 log_bi10 cenc0 age age sq, estimate 
+predict mgale_res_2, mgale
+lowess mgale_res_2 age
+```
+```{r echo=FALSE, out.width='65%', fig.align='center'}
+knitr::include_graphics('img/martingale.png')
+```
+
+
+---
+class: middle
+### **Assessing the correct functional form of continuous variables (6)**
+
+In R: 
+
+```{r eval=FALSE}
+model.cox <- survival::coxph(Surv(time, event) ~ treat + cir0 
+                             + log_bil0 + cenc0, data)
+mgale_res <- resid(model.cox, type = "martingale")
+plot(age, mgale_res)
+lines(lowess(age, mgale_res))
+
+model.cox1 <- survival::coxph(Surv(time, event) ~ treat + cir0 
+                             + log_bil0 + cenc0 + age + 
+*                              I(age^2), data)
+mgale_res <- resid(model.cox1, type = "martingale")
+plot(age, mgale_res)
+lines(lowess(age, mgale_res))
+```
+
