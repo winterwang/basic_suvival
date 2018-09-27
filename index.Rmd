@@ -383,4 +383,44 @@ class: middle
   - Type 3: **Prediction modelling** <br> We wish to ous a potentially large number of explanatory variables to build a model from which we can predict survival in a new individual with given values for the explanatory variables. 
 
 
+---
+class: middle
+## Estimating an exposure effect
 
+
+
+
+---
+class: middle
+## Proposed strategy - preliminary investigations: 
+
+- All analyses should start with preliminary investigations
+
+  - Kaplan-Meier plots and log rank tests to investigate the association between **each variable and the outcome**.
+  
+  - Assessments of proportional hazard assumption for each variable using plots. 
+  
+  - Investigate the association between the **main exposure and each potential confounder**.
+  
+  
+---
+class: middle
+## Proposed strategy - main analysis: 
+
+1. Fit a survival model using only the main exposure of interest.
+
+2. Fit further models including the main exposure and each potential confounder, **one at a time**.
+
+3. Examine the impact of adjustment for **each confounder** on the estimated association (the HR) between the main exposure and time-to-event.
+
+4. Assess whether there is evidence that any of the adjustment variables modify the effect of the main exposure, i.e. whether there are any interactions (gender, etc.).
+
+5. Fit a model for the main exposure with adjustment for variables identified as confounder in stage 3, and with interaction identified in 4.
+
+6. For any remaining variable not included in the model in 5., add them back to the model **one by one** to assess whether they are confounders in the presence of any of the other variables in the model. 
+
+7. For the final model, include all variables used in 5. plus any additional variables identified in 6.
+
+---
+class: middle, inverse, center
+## Further check: <br>Again, check whether the proportional hazard assumptions holds in the final model.
