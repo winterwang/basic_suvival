@@ -614,6 +614,7 @@ knitr::include_graphics('img/Schoenfeld.png')
 
 ---
 class: middle
+### **The proportional hazard assumption (4)**
 
 In STATA:
 
@@ -643,3 +644,18 @@ time.dep.zph
 # cir0 -0.169    2.53  0.112
 ```
 
+---
+class: middle
+### **Assessing the correct functional form of continuous variables**
+
+Using **Martingale residuals** to help us choose the correct form of continuous variables.
+
+Sometimes continuous variables need to be transformed or may be need to be added into the model in a quadratic/cubic form, in order to meet the proportional hazard assumption:
+
+$$
+\begin{aligned}
+h(t|x) & = h_0\exp(\beta x) \\ &\text{ vs } \\ 
+h(t|x) & = h_0\exp(\beta \log x) \\ &\text{ vs } \\ 
+h(t|x) & = h_0\exp(\beta_1 x + \beta_2 x^2) 
+\end{aligned}
+$$
