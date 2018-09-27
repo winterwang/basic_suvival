@@ -253,6 +253,20 @@ $$
 .footnote[
 [1] Cox, David R. 1972. “Models and Life-Tables Regression.” JR Stat. Soc. Ser. B 34: 187–220.]
 
+---
+class: middle
+# To be semi-parametric or fully-parametric?
+
+- The Cox model uses fewer assumptions, but a fully parametric model may **often be perfectly appropriate**.
+
+- If an exponential or Weibull model is fine, then a Cox model is also OK.
+
+- They will generate similar hazard ratio estimates. 
+
+- The fully-parametric approach may give slightly more precise (smaller 95% CIs).
+
+- But this is traded of against the concern that the baseline hazard may have been mis-specified.
+
 
 ---
 class: inverse, middle, center
@@ -324,17 +338,49 @@ class: inverse, center, middle
 # Strategies of doing survival analysis
 
 
+---
+class: middle, center
+## The strategy of analysis depends on the **type of study** and on the **question of interest**
+
+#### Experimental (randomized controlled trial) or Observational study
 
 ---
 class: middle
-# To be semi-parametric or fully-parametric?
+# Randomized controlled trial
 
-- The Cox model uses fewer assumptions, but a fully parametric model may **often be perfectly appropriate**.
+- Treatment group and a control group
 
-- If an exponential or Weibull model is fine, then a Cox model is also OK.
+- No other variables of interest except for treatment
 
-- They will generate similar hazard ratio estimates. 
 
-- The fully-parametric approach may give slightly more precise (smaller 95% CIs).
+---
+class: middle
+## Proposed strategy: 
+1. Summarise
+    1. The numbers of individuals in the two treatment groups
+    2. The numbers of events and censorings in the two treatment groups
+    3. median event and consoring times in the two treatment groups.
+2. Present Kaplan-Meier estimates of the survivor curves.
 
-- But this is traded of against the concern that the baseline hazard may have been mis-specified.
+3. Use the log rank test to assess the null hypothesis that the survivor curves in the two treatment groups are the same. 
+
+4. Investigate using plots whether a proportional hazard assumption is appropriate in quantifying the association between treatment groups and survival.
+
+5. If PH assumption is appropriate, fit Cox PH model (or exponential/Weibull, etc.) to estimate: hazard ratio, p value, and 95% CI.
+6. Perform more formal assessments (tests) about the PH assumption
+
+---
+class: middle
+# Observational studies
+
+- Several explanatory variables that we need to consider. 
+- The choice of explanatory variables to be included in a survival model depends on the aims of your investigation: 
+
+  - Type 1: **Estimating an exposure effect** <br> We are only interested in mainly one particular exposure, but wish to control for possible confounders
+  
+  - Type 2: **Understanding the associations between a set of several variables and the time-to-event** <br> We are interested in the independent effects of several exposures on survival, perhaps to determine which has the greatest impact on survival.
+  
+  - Type 3: **Prediction modelling** <br> We wish to ous a potentially large number of explanatory variables to build a model from which we can predict survival in a new individual with given values for the explanatory variables. 
+
+
+
