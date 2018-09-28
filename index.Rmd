@@ -1016,3 +1016,46 @@ class: center
 background-image: url("./img/lancet.png")
 background-position: 50% 50%
 background-size: contain
+
+
+---
+class: middle
+### **Accelerated failure time model (6)**
+
+Like proportional hazard models there are models for survival data which can be classified as AFT models: 
+
+- Weibull 
+
+$$
+\begin{aligned}
+h_0(t) & = \kappa \lambda t^{\kappa -1} \\  
+h(t|x) & = \kappa\lambda t^{\kappa -1} \exp(\beta x)
+\end{aligned}
+$$
+
+- Log-logistic
+
+$$
+\begin{aligned}
+h_0(t) & = \frac{\exp(\theta\kappa)t^{\kappa -1}}{1+\exp(\theta)t^{\kappa}}\\
+h(t|x) & = \frac{\exp(\theta\kappa)t^{\kappa -1}}{1+\exp(\theta)t^{\kappa}}\exp(\beta x)
+\end{aligned}
+$$
+
+- Others: Log-normal, Gamma, inverse gamma, etc.
+
+---
+class: middle
+### **Accelerated failure time model (7)**
+
+Especially, under Weibull model, the relationship between log-hazard ratio and the acceleration factor is: 
+
+$$\beta_{PH} = \kappa \times \beta_{AFT}$$
+
+
+How to choose different models? Akaike Information Criterion (AIC)
+
+$$\text{AIC} = -2\times \text{log likelihood} + 2p$$
+
+
+Where, $p$ is the number of parameters in the model. **A lower AIC indicates a better fitting model.**
