@@ -847,8 +847,26 @@ In Stata:
 predict double dfb*, dfbeta
 scatter dfb* num
 ```
-
 &lt;img src="img/deltabeta.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle
+### **Incorporating model checking into the strategy for analysis**
+
+- Developing an analysis strategy is a **complex task**.
+
+- In survival analysis there is the additional complexity that we should check the proportional hazards assumption 
+
+So what can we do if we find evidence that the proportional hazards assumption does not hold?
+
+- Changing the functional form of the explanatory variables
+
+- Fitting separate models in different parts of the time scale
+
+- Using a stratified Cox proportional hazards model
+
+- Abandon using proportional hazards model (use other types of model that does not require the assumption, such as accelerated failure time, AFT model)
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
