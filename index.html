@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Survival Analysis
 ## The basic ideas, models, assumptions, and something beyond
 ### Chaochen Wang
-### 2018/10/03 (updated: 2018-09-27)
+### 2018/10/03 (updated: 2018-09-28)
 
 ---
 
@@ -754,7 +754,7 @@ lines(lowess(age, mgale_res))
 
 ---
 class: middle
-### **Identifying individuals for whom the model does not provide a good fit**
+### **Identifying outliers (1)**
 
 **Deviance residuals** are a transformation of the Martingale residuals and are defined as
 
@@ -766,6 +766,89 @@ class: middle
 
     - **Large positive** deviance residual suggests that the individual has the event sooner than predicted by the model; 
     - **Large negative** deviance residual suggests that the individual had the event later than predicted by the model.
+    
+    
+---
+class: middle
+### **Identifying outliers (2)**
+
+
+Plot deviance residuals against risk score `\((\beta^{Tx})\)`: if individuals with a high risk score tend to have higher deviance residuals, this might indicates that the model provides worse fit for this type of individuals.
+
+After assessing the residuals we must consider what to do about people found with worse fitting: 
+
+- Investigate their features -- Do they have particular features?
+
+- Any additional variables included can improve the fitting?
+
+- Any variable needs to be transformed to other forms so that fitting could be improved?
+
+
+---
+class: middle
+### **Identifying outliers (3)**
+
+In STATA 
+
+```
+stset dateout, origin(datein) id(id) fail(d) scale(365.25)
+// cox model of interest
+stcox ag log_wbc 
+// deviance residuals, plotted by individual
+predict dev, deviance
+gen num=_n
+scatter dev num
+// deviance residuals plotted against risk score
+predict riskscore, xb
+scatter dev riskscore
+```
+
+&lt;img src="img/deviance residuals.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+class: middle
+### **Identifying outliers (4)**
+
+In R
+
+
+```r
+cox.model &lt;- survival::coxph(Surv(time, status) ~ sex, data = lung)
+# extract the deviance residuals
+devres &lt;- resid(cox.model, type = "deviance")
+
+# plot against individuals
+plot(devres, xlab = "index", ylab = "Deviance Residuals", cex.lab = 1.3) 
+abline(h=0)
+
+# plot against risk scores (linear predictors)
+lp &lt;- predict(cox.model, 
+              type="lp" ) # extract risk scores for each individual
+plot(lp, devres, xlab = "Linear Predictors", 
+                 ylab = "Deviance Residuals", cex.lab = 1.3) 
+abline(h=0)
+```
+
+---
+class: middle
+### **Other residuals**
+
+
+- **Delta-beta**
+    1. Remove individual `\(i\)` from the data and fit the model again, find an estiamte of log hazard ratio parameter: `\(\hat\beta_{1(i)}\)`
+    2. The difference between the estimate using the full data `\(\hat\beta_1\)` and the estimate with individual removed: `\(\hat\beta_1 - \hat\beta_{1(i)}\)`
+    3. Large delta-beta occurs if individual `\(i\)` has a large influence on the estimate from the full data
+    4. Plots of delta-betas for all individuals can identify individuals who might have a large influence on the overall estimate.
+
+In Stata: 
+```
+predict double dfb*, dfbeta
+scatter dfb* num
+```
+
+&lt;img src="img/deltabeta.png" width="40%" style="display: block; margin: auto;" /&gt;
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
