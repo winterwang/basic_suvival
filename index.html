@@ -867,6 +867,147 @@ So what can we do if we find evidence that the proportional hazards assumption d
 - Using a stratified Cox proportional hazards model
 
 - Abandon using proportional hazards model (use other types of model that does not require the assumption, such as accelerated failure time, AFT model)
+
+
+---
+class: middle
+### **Stratified Cox proportional hazards model (1)**
+
+
+Stantdard Cox proportional hazards model:
+
+`$$h(t|\text{Sex, Treat}) = h_0(t)[\exp{\beta_{\text{sex}}\text{Sex} +\beta_{\text{treat}}\text{Treat}}]$$`
+
+Cox proportional hazards model **stratified by sex**: 
+
+
+`$$h(t|\text{Sex, Treat}) = \left\{\begin{array}{ll} h_{0M}(t)\exp(\beta_{\text{treat}}\text{Treat}) \text{ for men} \\ h_{0F}(t)\exp(\beta_{\text{treat}}\text{Treat}) \text{ for women}  \\ \end{array}\right.$$`
+
+Where
+- The effect of the treatment is assumed to be the same for men and women `\((\beta_{\text{treat}})\)` and is assumed to act proportionally on the hazard
+- But women and men have a different baseline hazard, **i.e. the effect of sex is not assumed to be proportional.**
+
+---
+class: middle
+### **Stratified Cox proportional hazards model (2)**
+
+- Each case, at it's event time, is compared with all individuals **at risk in the same stratum as the case.** 
+
+&lt;img src="img/stratified.png" width="80%" style="display: block; margin: auto;" /&gt;&lt;img src="img/stratified_sex.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle, inverse, center
+# Accelerated failure time models
+
+---
+class: middle
+### **Accelerated failure time model (1)**
+
+
+--
+
+- Did we forget about something?
+
+--
+- Do you really care about the hazard `\(h_0(t)\)`?
+
+--
+&lt;iframe src="https://giphy.com/embed/OJaBv8p3xWUoM" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen class="center"&gt;&lt;/iframe&gt;&lt;p&gt;&lt;a href="https://giphy.com/gifs/OJaBv8p3xWUoM"&gt;&lt;/a&gt;&lt;/p&gt;
+
+
+--
+- Is there a way that we can **model the impact of explanatory variables on the event time itself?**
+
+
+---
+class: middle
+### **Accelerated failure time model (2)**
+
+`\(T_0\)` event time in the control group
+
+`\(T_1\)` event time in the treatment group
+
+`$$T_1 = \psi_{AFT}T_0$$`
+
+- If `\(\psi_{AFT} = 2\)`. It means that the event times in the treatment group tend to be two times the survival times in the control groups (longer survival).
+
+- In other words, the event tends to happen later for the individuals in the treatment group.&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
+--
+**Reminder: proportional hazards assumtion** 
+`$$h_1(t) = \psi_{PH}h_0(t)$$`
+
+
+---
+class: middle
+### **Accelerated failure time model (3)**
+
+- Under AFT model, the time-to-event for individuals in the treatment group is **speeded up** or **slowed down** compared to individuals in the control group.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+--
+- The AFT model provides a **natural way** of describing the effects of variables on disease progression: some people move faster along the progression path than others.
+
+---
+class: middle
+### **Accelerated failure time model (4)**
+
+A **Proportional hazards model** is usually written as: 
+
+`$$h_1(t) = \exp(\beta_{PH})h_0(t)$$`
+
+instead of 
+
+`$$h_1(t) = \psi_{PH}h_0(t)$$`
+
+
+An **Accelerated failure time model** is usually written as: 
+
+`$$T_1 = \exp(-\beta_{AFT})T_0$$`
+
+
+instead of 
+
+`$$T_1 = \psi_{AFT}T_0$$`
+
+
+---
+class: middle
+### **Accelerated failure time model (5)**
+
+`$$T_1 = \exp(-\beta_{AFT})T_0$$`
+
+
+Survivor function in the **control group**: 
+
+`$$S_0(t) = \text{Pr}(T_0&gt;t)$$`
+
+Survivor function in the **treatment group**:
+
+$$
+`\begin{aligned}
+S_1(t) &amp; = \text{Pr}(T_1 &gt; t) \\ 
+       &amp; = \text{Pr}[\exp(-\beta_{AFT})T_0 &gt; t] \\
+       &amp; = \text{Pr}[T_0 &gt; \exp(\beta_{AFT})t] \\ 
+       &amp; = S_0[\exp(\beta_{AFT})t]
+\end{aligned}`
+$$
+
+--
+- If `\(\exp(\beta_{AFT}) &gt; 1\)`: survival times in the treatment group will tend to be **earlier (shorter)** than survival times in the control group.
+
+- If `\(\exp(\beta_{AFT}) &lt; 1\)`: survival times in the treatment group will tend to be **later (longer)** than survival times in the control group.
+
+
+---
+class: middle, center, inverse
+## `\(\exp(\beta_{AFT})\)` is interpreted as acceleration factor
+
+---
+class: center
+background-image: url("./img/lancet.png")
+background-position: 50% 50%
+background-size: contain
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
