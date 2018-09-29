@@ -462,7 +462,7 @@ Chapman and Hall/CRC, 2015]
 class: middle
 ### Proposed strategy - main analysis: 
 
-1. Consider each variable separately in a series of Cox proportional hazards (or parametric) models and assess whether each is associated with survival by itsefl using a likelihood ratio test (LRT, next slide). 
+1. Consider each variable separately in a series of Cox proportional hazards (or parametric) models and assess whether each is associated with survival by itself using a likelihood ratio test (LRT, next slide). 
 
 2. Include all of the variables selected at stage 1. in a single Cox proportional hazards model. 
 
