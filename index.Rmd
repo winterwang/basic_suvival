@@ -265,7 +265,7 @@ class: middle
 
 - The fully-parametric approach may give slightly more precise (smaller 95% CIs).
 
-- But this is traded of against the concern that the baseline hazard may have been mis-specified.
+- But this is traded off against the concern that the baseline hazard may have been mis-specified.
 
 
 ---
