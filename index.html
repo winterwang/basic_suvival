@@ -484,7 +484,7 @@ class: middle
 
 - The basic principle: let's consider two variables `\(x_1, x_2\)`, where `\(x_1\)` is of interest, and `\(x_2\)` is potential confounder: 
 
-    - Fit the survival model (Cox/exponetial/Weibull) **with and without** inclusion of `\(x_2\)`; 
+    - Fit the survival model (Cox/exponential/Weibull) **with and without** inclusion of `\(x_2\)`; 
     - If the inclusion of `\(x_2\)` changes the HR of `\(x_1\)` **significantly**, then we will retain it in the model;
     - If the inclusion of `\(x_2\)` has **little impact** on the HR of `\(x_1\)` estimated, and is not of interest then we may decide to omit it from the model;
     - If there are many potential confounders, each could be assessed in turn (one by one).
