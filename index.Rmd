@@ -1071,7 +1071,7 @@ In STATA:
 // proportional hazards model
 streg i.drug i.agecat, distribution(weibull)
 // AFT model
-streg i.drug i.agecat, distribution(weibull) tim
+streg i.drug i.agecat, distribution(weibull) time
 streg i.drug i.agecat, distribution(llogistic)
 ```
 
