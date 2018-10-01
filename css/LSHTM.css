@@ -282,3 +282,6 @@ ru-blockquote {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
+
+/* math font size*/
+.mjx-chtml{ font-size: 110% !important; }
