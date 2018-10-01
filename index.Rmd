@@ -1,6 +1,6 @@
 ---
 title: "Survival Analysis"
-subtitle: "The basic ideas, models, assumptions, and something beyond"
+subtitle: "The basic ideas, models, assumptions, and something beyond."
 author: "Chaochen Wang"
 date: "2018/10/03 (updated: `r Sys.Date()`)"
 output:
